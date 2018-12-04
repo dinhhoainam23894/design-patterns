@@ -566,14 +566,14 @@ $president2 = President::getInstance();
 
 var_dump($president1 === $president2); // true
 ```
-
 Structural Design Patterns
 ==========================
-In plain words
-> Structural patterns are mostly concerned with object composition or in other words how the entities can use each other. Or yet another explanation would be, they help in answering "How to build a software component?"
+Nói một cách đơn giản
 
-Wikipedia says
-> In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
+> Structural pattern chủ yếu quan tâm tới các thành phần đối tượng hay nói cách khác là các thực thể có thể tương tác lẫn nhau như thế nào. Hoặc giải thích khác sẽ là, chúnggiúp trả lời "Cách xây dựng thành phần phần mềm?"
+
+Wikipedia định nghĩa là
+> Trong lĩnh vực kĩ thuật phần mềm, structural design pattern là các design pattern được thiết kế dễ dàng bằng cách xác định đơn giản các mối quan hệ giữa các thực thể. 
 
  * [Adapter](#-adapter)
  * [Bridge](#-bridge)
@@ -585,22 +585,25 @@ Wikipedia says
 
 🔌 Adapter
 -------
-Real world example
-> Consider that you have some pictures in your memory card and you need to transfer them to your computer. In order to transfer them you need some kind of adapter that is compatible with your computer ports so that you can attach memory card to your computer. In this case card reader is an adapter.
-> Another example would be the famous power adapter; a three legged plug can't be connected to a two pronged outlet, it needs to use a power adapter that makes it compatible with the two pronged outlet.
-> Yet another example would be a translator translating words spoken by one person to another
+Ví dụ thực tế
+> Giả sử là bạn đang có một số hình ảnh trong thẻ nhớ của mình và bạn cần chuyển chúng vào máy tính. Để chuyển được chúng bạn cần có thứ gì đó như adapter có khả năng tương thích với máy tính của mình để bạn có thể kết nối thẻ nhớ vào máy tính. Trong trường hợp này đầu đọc thẻ là một adapter.
 
-In plain words
-> Adapter pattern lets you wrap an otherwise incompatible object in an adapter to make it compatible with another class.
+> Một ví dụ khác như bộ nguồn adapter nổi tiếng; chiếc ổ cắm 3 chân không thể kết nối với đầu ra hai chân, nó cần sử dụng một power adapter giúp nó tương thích với đầu ra 2 chân.
 
-Wikipedia says
-> In software engineering, the adapter pattern is a software design pattern that allows the interface of an existing class to be used as another interface. It is often used to make existing classes work with others without modifying their source code.
+> Một ví dụ khác là một người dịch giả sẽ dịch những từ do một người nói ra cho người khác.
 
-**Programmatic Example**
+Nói một cách đơn giản
 
-Consider a game where there is a hunter and he hunts lions.
+> Adapter pattern cho phép bạn đóng gói một object không tương thích vào một adapter và giúp nó tương thích với một class khác
 
-First we have an interface `Lion` that all types of lions have to implement
+Wikipedia định nghĩa là
+> Trong kĩ thuật phần mềm, adapter pattern là một design pattern trong lĩnh vực phần mềm cho phép interface của một class đã tồn tại có thể sử dụng được như một interface khác. Nó thường được sử dụng để giúp các class đã tồn tại làm việc được với những class khác mà không cần chỉnh sửa source code.
+
+**Ví dụ lập trình**
+
+Hãy xem qua một trò chơi về người thợ săn và anh ta săn sư tử.
+
+Đầu tiên hãy tạo một interface `Lion` mà tất cả các loại sư tử có thể implement
 
 ```php
 interface Lion
@@ -622,7 +625,9 @@ class AsianLion implements Lion
     }
 }
 ```
-And hunter expects any implementation of `Lion` interface to hunt.
+
+Và thợ săn dự đoán tất cả những thứ implement từ `Lion` để săn.
+
 ```php
 class Hunter
 {
@@ -633,10 +638,10 @@ class Hunter
 }
 ```
 
-Now let's say we have to add a `WildDog` in our game so that hunter can hunt that also. But we can't do that directly because dog has a different interface. To make it compatible for our hunter, we will have to create an adapter that is compatible
+Bây giờ giả sử chúng ta thêm một `WildDog` vào game để thợ săn cũng có thể săn nó. Nhưng chúng ta không thể làm việc này trực tiếp vì chó thuộc một interface khác. Để nó tương thích với thợ săn của chúng ta, chúng ta sẽ tạo một adapter để nó tương thích được
 
 ```php
-// This needs to be added to the game
+// Điều này cần phải được thêm vào trò chơi
 class WildDog
 {
     public function bark()
@@ -644,7 +649,7 @@ class WildDog
     }
 }
 
-// Adapter around wild dog to make it compatible with our game
+// Adapter xung quanh con chó hoang dã để làm cho nó tương thích với trò chơi của chúng tôi
 class WildDogAdapter implements Lion
 {
     protected $dog;
@@ -660,7 +665,8 @@ class WildDogAdapter implements Lion
     }
 }
 ```
-And now the `WildDog` can be used in our game using `WildDogAdapter`.
+
+Và bây giờ thì `WildGod` có thể được sử dụng trong game của chúng ta thông qua việc dùng `WildDogAdapter`
 
 ```php
 $wildDog = new WildDog();
@@ -672,20 +678,21 @@ $hunter->hunt($wildDogAdapter);
 
 🚡 Bridge
 ------
-Real world example
-> Consider you have a website with different pages and you are supposed to allow the user to change the theme. What would you do? Create multiple copies of each of the pages for each of the themes or would you just create separate theme and load them based on the user's preferences? Bridge pattern allows you to do the second i.e.
+Ví dụ thực tế
 
-![With and without the bridge pattern](https://cloud.githubusercontent.com/assets/11269635/23065293/33b7aea0-f515-11e6-983f-98823c9845ee.png)
+> Hãy xem việc bạn có một website và các trang khác nhau và bạn có nhiệm vụ phải cho phép người dùng có thể thay đổi theme. Bạn sẽ làm gì? Tạo ra một loạt các bản copy của mỗi trang cho mỗi theme hoặc bạn chỉ tạo những theme riêng và tải phần base của chúng dựa trên phần tùy chỉnh của mỗi user? Bridge pattern cho phép bạn thực hiện cách thứ 2 như này
 
-In Plain Words
-> Bridge pattern is about preferring composition over inheritance. Implementation details are pushed from a hierarchy to another object with a separate hierarchy.
+![có hoặc không có bridge pattern](https://cloud.githubusercontent.com/assets/11269635/23065293/33b7aea0-f515-11e6-983f-98823c9845ee.png)
 
-Wikipedia says
-> The bridge pattern is a design pattern used in software engineering that is meant to "decouple an abstraction from its implementation so that the two can vary independently"
+Nói một cách đơn giản
+> Bridge pattern là về việc thích thành phần hơn inheritence (kế thừa). Chi tiết việc implement được đẩy từ một hệ thống phân cấp tới các object khác với hệ thống phân cấp riêng biệt.
 
-**Programmatic Example**
+Wikipedia định nghĩa là
+> Bridge pattern là một design pattern được sử dụng trong kĩ thuật phần mềm mà nó được định nghĩa là "phân tách một trừu tượng từ việc thực hiện của nó để cả hai có thể khác nhau một cách độc lập"
 
-Translating our WebPage example from above. Here we have the `WebPage` hierarchy
+**Ví dụ trong lập trình**
+
+Ví dụ như việc dịch trang web của chúng ta từ trên xuống. Ở đây chúng ta có một hệ thống cấp bậc `WebPage`
 
 ```php
 interface WebPage
@@ -724,7 +731,7 @@ class Careers implements WebPage
     }
 }
 ```
-And the separate theme hierarchy
+Và các theme phân cấp riêng biệt 
 ```php
 
 interface Theme
@@ -754,7 +761,9 @@ class AquaTheme implements Theme
     }
 }
 ```
-And both the hierarchies
+
+Và cả hai hệ thống phân cấp
+
 ```php
 $darkTheme = new DarkTheme();
 
@@ -768,18 +777,18 @@ echo $careers->getContent(); // "Careers page in Dark Black";
 🌿 Composite
 -----------------
 
-Real world example
-> Every organization is composed of employees. Each of the employees has the same features i.e. has a salary, has some responsibilities, may or may not report to someone, may or may not have some subordinates etc.
+ví dụ thực tế
+> Mọi tổ chức đều bao gồm các thành viên. Mỗi một thành viên có các tính năng giống nhau như là có lương, có một số trách nhiệm, có thể hoặc không thể báo cáo cho ai đó, có thể hoặc không thể có một vài cấp dưới...
 
-In plain words
-> Composite pattern lets clients treat the individual objects in a uniform manner.
+Nói ngắn gọn
+> Composite pattern cho phép client xử lý các đối tượng theo một cách thống nhất.
 
-Wikipedia says
-> In software engineering, the composite pattern is a partitioning design pattern. The composite pattern describes that a group of objects is to be treated in the same way as a single instance of an object. The intent of a composite is to "compose" objects into tree structures to represent part-whole hierarchies. Implementing the composite pattern lets clients treat individual objects and compositions uniformly.
+Wikipedia định nghĩa là
+> Trong kĩ thuật phần mềm, composite pattern là một design pattern thuộc nhóm phân vùng. Composite pattern mô tả về một nhóm các object được xử lý cùng một cách giống như một instance của object. Mục đích của composite là "tạo ra" các object vào một cấu trúc dạng cây để đại diện cho toàn bộ hệ thống phân cấp. Việc triển khai composite pattern cho phép client xử lý các đối tượng và bố cục riêng lẻ một cách thống nhất.
 
-**Programmatic Example**
+**Ví dụ trong lập trình**
 
-Taking our employees example from above. Here we have different employee types
+Lấy ví dụ về nhân viên ở phía trên. Ở đây chúng ta có các loại nhân viên khác nhau
 
 ```php
 interface Employee
@@ -858,7 +867,7 @@ class Designer implements Employee
 }
 ```
 
-Then we have an organization which consists of several different types of employees
+Sau đó chúng ta có một tổ chức với nhiều kiểu nhân viên khác nhau
 
 ```php
 class Organization
@@ -883,7 +892,7 @@ class Organization
 }
 ```
 
-And then it can be used as
+Và nó có thể được sử dụng như sau:
 
 ```php
 // Prepare the employees
@@ -901,19 +910,20 @@ echo "Net salaries: " . $organization->getNetSalaries(); // Net Salaries: 27000
 ☕ Decorator
 -------------
 
-Real world example
+Ví dụ thực tế
+> Hãy tưởng tượng bạn đang có cửa hàng dịch vụ xe hơi và cung cấp nhiều dịch vụ khác nhau. Bây giờ bạn phải tính hóa đơn như nào? Bạn chọn một dịch vụ và tự động bổ sung giá của các dịch vụ đã cung cấp cho đến khi bạn nhận được chi phí cuối cùng. Ở đây mỗi loại dịch vụ là một decorator.
 
-> Imagine you run a car service shop offering multiple services. Now how do you calculate the bill to be charged? You pick one service and dynamically keep adding to it the prices for the provided services till you get the final cost. Here each type of service is a decorator.
+Nói ngắn gọn
 
-In plain words
-> Decorator pattern lets you dynamically change the behavior of an object at run time by wrapping them in an object of a decorator class.
+> Decorator pattern cho phép bạn tự động thay đổi các hành vi của một object ngay trong khi đang chạy bằng việc đóng gói chúng vào trong một object của một class decorator. 
 
-Wikipedia says
-> In object-oriented programming, the decorator pattern is a design pattern that allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class. The decorator pattern is often useful for adhering to the Single Responsibility Principle, as it allows functionality to be divided between classes with unique areas of concern.
+Wikipedia định nghĩa là
 
-**Programmatic Example**
+> Trong lập trình hướng đối tượng, decorator pattern là một design pattern mà cho phép hành động thêm vào các object riêng lẻ, tĩnh hoặc động mà không ảnh hưởng lên hành vi của các object khác trong cùng class. Decorator pattern khá hữu dụng trong việc tôn trọng nguyên tắc Single Responsibility Principle, vì nó cho phép các chức năng được phân chia giữa các class mà nó quan tâm tới những khu vực duy nhất
 
-Lets take coffee for example. First of all we have a simple coffee implementing the coffee interface
+**Ví dụ trong lập trình**
+
+Lấy coffee  là ví dụ. Đầu tiên tất cả chúng ta có một cốc coffee đơn giản được implement từ interface coffee .
 
 ```php
 interface Coffee
@@ -935,7 +945,9 @@ class SimpleCoffee implements Coffee
     }
 }
 ```
-We want to make the code extensible to allow options to modify it if required. Lets make some add-ons (decorators)
+
+Chúng ta muốn có thể mở rộng code để cho phép sửa đổi các tuỳ chọn nếu nó được yêu cầu.  Hãy tạo ra một vài add-on (decorator).
+
 ```php
 class MilkCoffee implements Coffee
 {
@@ -998,7 +1010,7 @@ class VanillaCoffee implements Coffee
 }
 ```
 
-Lets make a coffee now
+Giờ hãy tạo ra một ly coffee nào
 
 ```php
 $someCoffee = new SimpleCoffee();
@@ -1017,22 +1029,21 @@ $someCoffee = new VanillaCoffee($someCoffee);
 echo $someCoffee->getCost(); // 20
 echo $someCoffee->getDescription(); // Simple Coffee, milk, whip, vanilla
 ```
-
 📦 Facade
 ----------------
 
-Real world example
-> How do you turn on the computer? "Hit the power button" you say! That is what you believe because you are using a simple interface that computer provides on the outside, internally it has to do a lot of stuff to make it happen. This simple interface to the complex subsystem is a facade.
+Ví dụ thực tế
+>Làm thế nào để bạn bật máy tính? "Nhấn nút nguồn" bạn sẽ nói! Đó là điều bạn tin bởi vì bạn đang sử dụng một giao diện đơn giản mà máy tính cung cấp ở bên ngoài, bên trong nó phải làm rất nhiều thứ để làm cho nó xảy ra. Giao diện đơn giản này với hệ thống con phức tạp là một facade.
 
-In plain words
-> Facade pattern provides a simplified interface to a complex subsystem.
+Nói một cách đơn giản
+> Facade pattern cung cấp giao diện đơn giản cho một hệ thống con phức tạp.
 
-Wikipedia says
-> A facade is an object that provides a simplified interface to a larger body of code, such as a class library.
+Theo Wikipedia :
+> facade là một đối tượng cung cấp một interface đơn giản hóa cho đoạn code lớn, chẳng hạn như một class library.
 
-**Programmatic Example**
+**Ví dụ về lâp trình**
 
-Taking our computer example from above. Here we have the computer class
+Lấy ví dụ về máy tính ở trên. Ở đây chúng ta có class computer
 
 ```php
 class Computer
@@ -1073,7 +1084,7 @@ class Computer
     }
 }
 ```
-Here we have the facade
+Ở đây chúng ta có facade
 ```php
 class ComputerFacade
 {
@@ -1100,7 +1111,7 @@ class ComputerFacade
     }
 }
 ```
-Now to use the facade
+Bây giờ sử dụng facade như sau :
 ```php
 $computer = new ComputerFacade(new Computer());
 $computer->turnOn(); // Ouch! Beep beep! Loading.. Ready to be used!
@@ -1110,27 +1121,27 @@ $computer->turnOff(); // Bup bup buzzz! Haah! Zzzzz
 🍃 Flyweight
 ---------
 
-Real world example
-> Did you ever have fresh tea from some stall? They often make more than one cup that you demanded and save the rest for any other customer so to save the resources e.g. gas etc. Flyweight pattern is all about that i.e. sharing.
+Ví dụ thực tế
+> Bạn đã từng uống trà tươi từ một số gian hàng chưa? Họ thường làm nhiều hơn một ly mà bạn yêu cầu và để phần còn lại cho bất kỳ khách hàng nào khác để tiết kiệm tài nguyên, ví dụ: gas, vv .Flyweight pattern là tất cả về điều đó tức là chia sẻ.
 
-In plain words
-> It is used to minimize memory usage or computational expenses by sharing as much as possible with similar objects.
+Nói một cách đơn giản
+> Nó được sử dụng để giảm thiểu sử dụng bộ nhớ hoặc chi phí tính toán bằng cách chia sẻ càng nhiều càng tốt với các đối tượng tương tự.
 
-Wikipedia says
-> In computer programming, flyweight is a software design pattern. A flyweight is an object that minimizes memory use by sharing as much data as possible with other similar objects; it is a way to use objects in large numbers when a simple repeated representation would use an unacceptable amount of memory.
+Theo Wikipedia : 
+> Trong lập trình máy tính, flyweight là một mẫu thiết kế phần mềm.. Flyweight là một đối tượng giảm thiểu việc sử dụng bộ nhớ bằng cách chia sẻ càng nhiều dữ liệu càng tốt với các đối tượng tương tự khác; nó là một cách để sử dụng các đối tượng với số lượng lớn khi mà nó lặp lại thì sẽ sử dụng một lượng bộ nhớ không thể chấp nhận được.
 
-**Programmatic example**
+**Ví dụ về lập trình **
 
-Translating our tea example from above. First of all we have tea types and tea maker
+Từ ví dụ về trà ở trên. Trước hết, chúng ta có các loại trà và máy pha trà
 
 ```php
-// Anything that will be cached is flyweight.
-// Types of tea here will be flyweights.
+// Bất cứ điều gì sẽ được lưu trữ là flyweight.
+// Các loại trà ở đây sẽ là flyweights.
 class KarakTea
 {
 }
 
-// Acts as a factory and saves the tea
+//Hành vi như một nhà máy và tiết kiệm trà
 class TeaMaker
 {
     protected $availableTea = [];
@@ -1146,7 +1157,7 @@ class TeaMaker
 }
 ```
 
-Then we have the `TeaShop` which takes orders and serves them
+Sau đó, chúng tôi có `TeaShop` nhận đơn đặt hàng và phục vụ .
 
 ```php
 class TeaShop
@@ -1172,7 +1183,7 @@ class TeaShop
     }
 }
 ```
-And it can be used as below
+Và nó có thể được sử dụng như dưới đây :
 
 ```php
 $teaMaker = new TeaMaker();
@@ -1190,18 +1201,18 @@ $shop->serve();
 
 🎱 Proxy
 -------------------
-Real world example
-> Have you ever used an access card to go through a door? There are multiple options to open that door i.e. it can be opened either using access card or by pressing a button that bypasses the security. The door's main functionality is to open but there is a proxy added on top of it to add some functionality. Let me better explain it using the code example below.
+Ví dụ thực tế :
+> Bạn đã bao giờ sử dụng một thẻ truy cập để đi qua một cánh cửa? Có nhiều tùy chọn để mở cánh cửa đó, tức là nó có thể được mở bằng cách sử dụng thẻ truy cập hoặc bằng cách nhấn một nút để vượt qua bảo mật. Chức năng chính của cửa là để mở nhưng có một proxy được thêm vào đầu nó để thêm một số chức năng. Hãy để tôi giải thích rõ hơn bằng cách sử dụng ví dụ code bên dưới
 
-In plain words
-> Using the proxy pattern, a class represents the functionality of another class.
+Nói một cách đơn giản
+> Sử dụng proxy pattern, một class đại diện cho chức năng của một class khác.
 
-Wikipedia says
-> A proxy, in its most general form, is a class functioning as an interface to something else. A proxy is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object, or can provide additional logic. In the proxy extra functionality can be provided, for example caching when operations on the real object are resource intensive, or checking preconditions before operations on the real object are invoked.
+Theo Wikipedia:
+> Một proxy, ở dạng tổng quát nhất của nó,là một class có chức năng như một interface cho một cái khác. Proxy là một đối tượng bao bọc hoặc tác nhân được gọi bởi máy khách để truy cập đối tượng phục vụ thực đằng sau hậu trường.Sử dụng proxy chỉ đơn giản là có thể chuyển tiếp đến đối tượng thực, hoặc có thể cung cấp thêm logic. Trong chức năng bổ sung proxy có thể được cung cấp, ví dụ như bộ nhớ đệm khi các hoạt động trên đối tượng thực là tài nguyên chuyên sâu, hoặc kiểm tra điều kiện tiên quyết trước khi hoạt động trên đối tượng thực được gọi
 
-**Programmatic Example**
+**Ví dụ về lập trình**
 
-Taking our security door example from above. Firstly we have the door interface and an implementation of door
+Lấy ví dụ cửa an ninh của chúng ta ở trên. Đầu tiên chúng ta có interface cửa và những thứ implement nó
 
 ```php
 interface Door
@@ -1223,7 +1234,7 @@ class LabDoor implements Door
     }
 }
 ```
-Then we have a proxy to secure any doors that we want
+Sau đó, chúng ta có một proxy để bảo đảm bất kỳ cửa nào mà chúng ta muốn
 ```php
 class SecuredDoor
 {
@@ -1254,7 +1265,7 @@ class SecuredDoor
     }
 }
 ```
-And here is how it can be used
+Và đây là cách nó có thể được sử dụng :
 ```php
 $door = new SecuredDoor(new LabDoor());
 $door->open('invalid'); // Big no! It ain't possible.
@@ -1262,1037 +1273,8 @@ $door->open('invalid'); // Big no! It ain't possible.
 $door->open('$ecr@t'); // Opening lab door
 $door->close(); // Closing lab door
 ```
-Yet another example would be some sort of data-mapper implementation. For example, I recently made an ODM (Object Data Mapper) for MongoDB using this pattern where I wrote a proxy around mongo classes while utilizing the magic method `__call()`. All the method calls were proxied to the original mongo class and result retrieved was returned as it is but in case of `find` or `findOne` data was mapped to the required class objects and the object was returned instead of `Cursor`.
+Tuy nhiên, một ví dụ khác sẽ là một số loại triển khai trình ánh xạ dữ liệu. Ví dụ, gần đây tôi đã thực hiện một ODM (Object Data Mapper) cho MongoDB bằng cách sử dụng mẫu này, nơi tôi đã viết một proxy xung quanh các lớp mongo trong khi sử dụng phương thức ma thuật __call (). Tất cả các lời gọi phương thức đã được ủy nhiệm cho lớp mongo ban đầu và kết quả được truy xuất được trả về vì nó là nhưng trong trường hợp  `find` hoặc dữ liệu findOne được ánh xạ tới các đối tượng lớp được yêu cầu và đối tượng được trả về thay cho Cursor.
 
-Behavioral Design Patterns
-==========================
-
-In plain words
-> It is concerned with assignment of responsibilities between the objects. What makes them different from structural patterns is they don't just specify the structure but also outline the patterns for message passing/communication between them. Or in other words, they assist in answering "How to run a behavior in software component?"
-
-Wikipedia says
-> In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
-
-* [Chain of Responsibility](#-chain-of-responsibility)
-* [Command](#-command)
-* [Iterator](#-iterator)
-* [Mediator](#-mediator)
-* [Memento](#-memento)
-* [Observer](#-observer)
-* [Visitor](#-visitor)
-* [Strategy](#-strategy)
-* [State](#-state)
-* [Template Method](#-template-method)
-
-🔗 Chain of Responsibility
------------------------
-
-Real world example
-> For example, you have three payment methods (`A`, `B` and `C`) setup in your account; each having a different amount in it. `A` has 100 USD, `B` has 300 USD and `C` having 1000 USD and the preference for payments is chosen as `A` then `B` then `C`. You try to purchase something that is worth 210 USD. Using Chain of Responsibility, first of all account `A` will be checked if it can make the purchase, if yes purchase will be made and the chain will be broken. If not, request will move forward to account `B` checking for amount if yes chain will be broken otherwise the request will keep forwarding till it finds the suitable handler. Here `A`, `B` and `C` are links of the chain and the whole phenomenon is Chain of Responsibility.
-
-In plain words
-> It helps building a chain of objects. Request enters from one end and keeps going from object to object till it finds the suitable handler.
-
-Wikipedia says
-> In object-oriented design, the chain-of-responsibility pattern is a design pattern consisting of a source of command objects and a series of processing objects. Each processing object contains logic that defines the types of command objects that it can handle; the rest are passed to the next processing object in the chain.
-
-**Programmatic Example**
-
-Translating our account example above. First of all we have a base account having the logic for chaining the accounts together and some accounts
-
-```php
-abstract class Account
-{
-    protected $successor;
-    protected $balance;
-
-    public function setNext(Account $account)
-    {
-        $this->successor = $account;
-    }
-
-    public function pay(float $amountToPay)
-    {
-        if ($this->canPay($amountToPay)) {
-            echo sprintf('Paid %s using %s' . PHP_EOL, $amountToPay, get_called_class());
-        } elseif ($this->successor) {
-            echo sprintf('Cannot pay using %s. Proceeding ..' . PHP_EOL, get_called_class());
-            $this->successor->pay($amountToPay);
-        } else {
-            throw new Exception('None of the accounts have enough balance');
-        }
-    }
-
-    public function canPay($amount): bool
-    {
-        return $this->balance >= $amount;
-    }
-}
-
-class Bank extends Account
-{
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
-}
-
-class Paypal extends Account
-{
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
-}
-
-class Bitcoin extends Account
-{
-    protected $balance;
-
-    public function __construct(float $balance)
-    {
-        $this->balance = $balance;
-    }
-}
-```
-
-Now let's prepare the chain using the links defined above (i.e. Bank, Paypal, Bitcoin)
-
-```php
-// Let's prepare a chain like below
-//      $bank->$paypal->$bitcoin
-//
-// First priority bank
-//      If bank can't pay then paypal
-//      If paypal can't pay then bit coin
-
-$bank = new Bank(100);          // Bank with balance 100
-$paypal = new Paypal(200);      // Paypal with balance 200
-$bitcoin = new Bitcoin(300);    // Bitcoin with balance 300
-
-$bank->setNext($paypal);
-$paypal->setNext($bitcoin);
-
-// Let's try to pay using the first priority i.e. bank
-$bank->pay(259);
-
-// Output will be
-// ==============
-// Cannot pay using bank. Proceeding ..
-// Cannot pay using paypal. Proceeding ..:
-// Paid 259 using Bitcoin!
-```
-
-👮 Command
--------
-
-Real world example
-> A generic example would be you ordering food at a restaurant. You (i.e. `Client`) ask the waiter (i.e. `Invoker`) to bring some food (i.e. `Command`) and waiter simply forwards the request to Chef (i.e. `Receiver`) who has the knowledge of what and how to cook.
-> Another example would be you (i.e. `Client`) switching on (i.e. `Command`) the television (i.e. `Receiver`) using a remote control (`Invoker`).
-
-In plain words
-> Allows you to encapsulate actions in objects. The key idea behind this pattern is to provide the means to decouple client from receiver.
-
-Wikipedia says
-> In object-oriented programming, the command pattern is a behavioral design pattern in which an object is used to encapsulate all information needed to perform an action or trigger an event at a later time. This information includes the method name, the object that owns the method and values for the method parameters.
-
-**Programmatic Example**
-
-First of all we have the receiver that has the implementation of every action that could be performed
-```php
-// Receiver
-class Bulb
-{
-    public function turnOn()
-    {
-        echo "Bulb has been lit";
-    }
-
-    public function turnOff()
-    {
-        echo "Darkness!";
-    }
-}
-```
-then we have an interface that each of the commands are going to implement and then we have a set of commands
-```php
-interface Command
-{
-    public function execute();
-    public function undo();
-    public function redo();
-}
-
-// Command
-class TurnOn implements Command
-{
-    protected $bulb;
-
-    public function __construct(Bulb $bulb)
-    {
-        $this->bulb = $bulb;
-    }
-
-    public function execute()
-    {
-        $this->bulb->turnOn();
-    }
-
-    public function undo()
-    {
-        $this->bulb->turnOff();
-    }
-
-    public function redo()
-    {
-        $this->execute();
-    }
-}
-
-class TurnOff implements Command
-{
-    protected $bulb;
-
-    public function __construct(Bulb $bulb)
-    {
-        $this->bulb = $bulb;
-    }
-
-    public function execute()
-    {
-        $this->bulb->turnOff();
-    }
-
-    public function undo()
-    {
-        $this->bulb->turnOn();
-    }
-
-    public function redo()
-    {
-        $this->execute();
-    }
-}
-```
-Then we have an `Invoker` with whom the client will interact to process any commands
-```php
-// Invoker
-class RemoteControl
-{
-    public function submit(Command $command)
-    {
-        $command->execute();
-    }
-}
-```
-Finally let's see how we can use it in our client
-```php
-$bulb = new Bulb();
-
-$turnOn = new TurnOn($bulb);
-$turnOff = new TurnOff($bulb);
-
-$remote = new RemoteControl();
-$remote->submit($turnOn); // Bulb has been lit!
-$remote->submit($turnOff); // Darkness!
-```
-
-Command pattern can also be used to implement a transaction based system. Where you keep maintaining the history of commands as soon as you execute them. If the final command is successfully executed, all good otherwise just iterate through the history and keep executing the `undo` on all the executed commands.
-
-➿ Iterator
---------
-
-Real world example
-> An old radio set will be a good example of iterator, where user could start at some channel and then use next or previous buttons to go through the respective channels. Or take an example of MP3 player or a TV set where you could press the next and previous buttons to go through the consecutive channels or in other words they all provide an interface to iterate through the respective channels, songs or radio stations.  
-
-In plain words
-> It presents a way to access the elements of an object without exposing the underlying presentation.
-
-Wikipedia says
-> In object-oriented programming, the iterator pattern is a design pattern in which an iterator is used to traverse a container and access the container's elements. The iterator pattern decouples algorithms from containers; in some cases, algorithms are necessarily container-specific and thus cannot be decoupled.
-
-**Programmatic example**
-
-In PHP it is quite easy to implement using SPL (Standard PHP Library). Translating our radio stations example from above. First of all we have `RadioStation`
-
-```php
-class RadioStation
-{
-    protected $frequency;
-
-    public function __construct(float $frequency)
-    {
-        $this->frequency = $frequency;
-    }
-
-    public function getFrequency(): float
-    {
-        return $this->frequency;
-    }
-}
-```
-Then we have our iterator
-
-```php
-use Countable;
-use Iterator;
-
-class StationList implements Countable, Iterator
-{
-    /** @var RadioStation[] $stations */
-    protected $stations = [];
-
-    /** @var int $counter */
-    protected $counter;
-
-    public function addStation(RadioStation $station)
-    {
-        $this->stations[] = $station;
-    }
-
-    public function removeStation(RadioStation $toRemove)
-    {
-        $toRemoveFrequency = $toRemove->getFrequency();
-        $this->stations = array_filter($this->stations, function (RadioStation $station) use ($toRemoveFrequency) {
-            return $station->getFrequency() !== $toRemoveFrequency;
-        });
-    }
-
-    public function count(): int
-    {
-        return count($this->stations);
-    }
-
-    public function current(): RadioStation
-    {
-        return $this->stations[$this->counter];
-    }
-
-    public function key()
-    {
-        return $this->counter;
-    }
-
-    public function next()
-    {
-        $this->counter++;
-    }
-
-    public function rewind()
-    {
-        $this->counter = 0;
-    }
-
-    public function valid(): bool
-    {
-        return isset($this->stations[$this->counter]);
-    }
-}
-```
-And then it can be used as
-```php
-$stationList = new StationList();
-
-$stationList->addStation(new RadioStation(89));
-$stationList->addStation(new RadioStation(101));
-$stationList->addStation(new RadioStation(102));
-$stationList->addStation(new RadioStation(103.2));
-
-foreach($stationList as $station) {
-    echo $station->getFrequency() . PHP_EOL;
-}
-
-$stationList->removeStation(new RadioStation(89)); // Will remove station 89
-```
-
-👽 Mediator
-========
-
-Real world example
-> A general example would be when you talk to someone on your mobile phone, there is a network provider sitting between you and them and your conversation goes through it instead of being directly sent. In this case network provider is mediator.
-
-In plain words
-> Mediator pattern adds a third party object (called mediator) to control the interaction between two objects (called colleagues). It helps reduce the coupling between the classes communicating with each other. Because now they don't need to have the knowledge of each other's implementation.
-
-Wikipedia says
-> In software engineering, the mediator pattern defines an object that encapsulates how a set of objects interact. This pattern is considered to be a behavioral pattern due to the way it can alter the program's running behavior.
-
-**Programmatic Example**
-
-Here is the simplest example of a chat room (i.e. mediator) with users (i.e. colleagues) sending messages to each other.
-
-First of all, we have the mediator i.e. the chat room
-
-```php
-interface ChatRoomMediator 
-{
-    public function showMessage(User $user, string $message);
-}
-
-// Mediator
-class ChatRoom implements ChatRoomMediator
-{
-    public function showMessage(User $user, string $message)
-    {
-        $time = date('M d, y H:i');
-        $sender = $user->getName();
-
-        echo $time . '[' . $sender . ']:' . $message;
-    }
-}
-```
-
-Then we have our users i.e. colleagues
-```php
-class User {
-    protected $name;
-    protected $chatMediator;
-
-    public function __construct(string $name, ChatRoomMediator $chatMediator) {
-        $this->name = $name;
-        $this->chatMediator = $chatMediator;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function send($message) {
-        $this->chatMediator->showMessage($this, $message);
-    }
-}
-```
-And the usage
-```php
-$mediator = new ChatRoom();
-
-$john = new User('John Doe', $mediator);
-$jane = new User('Jane Doe', $mediator);
-
-$john->send('Hi there!');
-$jane->send('Hey!');
-
-// Output will be
-// Feb 14, 10:58 [John]: Hi there!
-// Feb 14, 10:58 [Jane]: Hey!
-```
-
-💾 Memento
--------
-Real world example
-> Take the example of calculator (i.e. originator), where whenever you perform some calculation the last calculation is saved in memory (i.e. memento) so that you can get back to it and maybe get it restored using some action buttons (i.e. caretaker).
-
-In plain words
-> Memento pattern is about capturing and storing the current state of an object in a manner that it can be restored later on in a smooth manner.
-
-Wikipedia says
-> The memento pattern is a software design pattern that provides the ability to restore an object to its previous state (undo via rollback).
-
-Usually useful when you need to provide some sort of undo functionality.
-
-**Programmatic Example**
-
-Lets take an example of text editor which keeps saving the state from time to time and that you can restore if you want.
-
-First of all we have our memento object that will be able to hold the editor state
-
-```php
-class EditorMemento
-{
-    protected $content;
-
-    public function __construct(string $content)
-    {
-        $this->content = $content;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-}
-```
-
-Then we have our editor i.e. originator that is going to use memento object
-
-```php
-class Editor
-{
-    protected $content = '';
-
-    public function type(string $words)
-    {
-        $this->content = $this->content . ' ' . $words;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function save()
-    {
-        return new EditorMemento($this->content);
-    }
-
-    public function restore(EditorMemento $memento)
-    {
-        $this->content = $memento->getContent();
-    }
-}
-```
-
-And then it can be used as
-
-```php
-$editor = new Editor();
-
-// Type some stuff
-$editor->type('This is the first sentence.');
-$editor->type('This is second.');
-
-// Save the state to restore to : This is the first sentence. This is second.
-$saved = $editor->save();
-
-// Type some more
-$editor->type('And this is third.');
-
-// Output: Content before Saving
-echo $editor->getContent(); // This is the first sentence. This is second. And this is third.
-
-// Restoring to last saved state
-$editor->restore($saved);
-
-$editor->getContent(); // This is the first sentence. This is second.
-```
-
-😎 Observer
---------
-Real world example
-> A good example would be the job seekers where they subscribe to some job posting site and they are notified whenever there is a matching job opportunity.   
-
-In plain words
-> Defines a dependency between objects so that whenever an object changes its state, all its dependents are notified.
-
-Wikipedia says
-> The observer pattern is a software design pattern in which an object, called the subject, maintains a list of its dependents, called observers, and notifies them automatically of any state changes, usually by calling one of their methods.
-
-**Programmatic example**
-
-Translating our example from above. First of all we have job seekers that need to be notified for a job posting
-```php
-class JobPost
-{
-    protected $title;
-
-    public function __construct(string $title)
-    {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-}
-
-class JobSeeker implements Observer
-{
-    protected $name;
-
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
-
-    public function onJobPosted(JobPost $job)
-    {
-        // Do something with the job posting
-        echo 'Hi ' . $this->name . '! New job posted: '. $job->getTitle();
-    }
-}
-```
-Then we have our job postings to which the job seekers will subscribe
-```php
-class EmploymentAgency implements Observable
-{
-    protected $observers = [];
-
-    protected function notify(JobPost $jobPosting)
-    {
-        foreach ($this->observers as $observer) {
-            $observer->onJobPosted($jobPosting);
-        }
-    }
-
-    public function attach(Observer $observer)
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function addJob(JobPost $jobPosting)
-    {
-        $this->notify($jobPosting);
-    }
-}
-```
-Then it can be used as
-```php
-// Create subscribers
-$johnDoe = new JobSeeker('John Doe');
-$janeDoe = new JobSeeker('Jane Doe');
-
-// Create publisher and attach subscribers
-$jobPostings = new EmploymentAgency();
-$jobPostings->attach($johnDoe);
-$jobPostings->attach($janeDoe);
-
-// Add a new job and see if subscribers get notified
-$jobPostings->addJob(new JobPost('Software Engineer'));
-
-// Output
-// Hi John Doe! New job posted: Software Engineer
-// Hi Jane Doe! New job posted: Software Engineer
-```
-
-🏃 Visitor
--------
-Real world example
-> Consider someone visiting Dubai. They just need a way (i.e. visa) to enter Dubai. After arrival, they can come and visit any place in Dubai on their own without having to ask for permission or to do some leg work in order to visit any place here; just let them know of a place and they can visit it. Visitor pattern lets you do just that, it helps you add places to visit so that they can visit as much as they can without having to do any legwork.
-
-In plain words
-> Visitor pattern lets you add further operations to objects without having to modify them.
-
-Wikipedia says
-> In object-oriented programming and software engineering, the visitor design pattern is a way of separating an algorithm from an object structure on which it operates. A practical result of this separation is the ability to add new operations to existing object structures without modifying those structures. It is one way to follow the open/closed principle.
-
-**Programmatic example**
-
-Let's take an example of a zoo simulation where we have several different kinds of animals and we have to make them Sound. Let's translate this using visitor pattern
-
-```php
-// Visitee
-interface Animal
-{
-    public function accept(AnimalOperation $operation);
-}
-
-// Visitor
-interface AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey);
-    public function visitLion(Lion $lion);
-    public function visitDolphin(Dolphin $dolphin);
-}
-```
-Then we have our implementations for the animals
-```php
-class Monkey implements Animal
-{
-    public function shout()
-    {
-        echo 'Ooh oo aa aa!';
-    }
-
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitMonkey($this);
-    }
-}
-
-class Lion implements Animal
-{
-    public function roar()
-    {
-        echo 'Roaaar!';
-    }
-
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitLion($this);
-    }
-}
-
-class Dolphin implements Animal
-{
-    public function speak()
-    {
-        echo 'Tuut tuttu tuutt!';
-    }
-
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitDolphin($this);
-    }
-}
-```
-Let's implement our visitor
-```php
-class Speak implements AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey)
-    {
-        $monkey->shout();
-    }
-
-    public function visitLion(Lion $lion)
-    {
-        $lion->roar();
-    }
-
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        $dolphin->speak();
-    }
-}
-```
-
-And then it can be used as
-```php
-$monkey = new Monkey();
-$lion = new Lion();
-$dolphin = new Dolphin();
-
-$speak = new Speak();
-
-$monkey->accept($speak);    // Ooh oo aa aa!    
-$lion->accept($speak);      // Roaaar!
-$dolphin->accept($speak);   // Tuut tutt tuutt!
-```
-We could have done this simply by having an inheritance hierarchy for the animals but then we would have to modify the animals whenever we would have to add new actions to animals. But now we will not have to change them. For example, let's say we are asked to add the jump behavior to the animals, we can simply add that by creating a new visitor i.e.
-
-```php
-class Jump implements AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey)
-    {
-        echo 'Jumped 20 feet high! on to the tree!';
-    }
-
-    public function visitLion(Lion $lion)
-    {
-        echo 'Jumped 7 feet! Back on the ground!';
-    }
-
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        echo 'Walked on water a little and disappeared';
-    }
-}
-```
-And for the usage
-```php
-$jump = new Jump();
-
-$monkey->accept($speak);   // Ooh oo aa aa!
-$monkey->accept($jump);    // Jumped 20 feet high! on to the tree!
-
-$lion->accept($speak);     // Roaaar!
-$lion->accept($jump);      // Jumped 7 feet! Back on the ground!
-
-$dolphin->accept($speak);  // Tuut tutt tuutt!
-$dolphin->accept($jump);   // Walked on water a little and disappeared
-```
-
-💡 Strategy
---------
-
-Real world example
-> Consider the example of sorting, we implemented bubble sort but the data started to grow and bubble sort started getting very slow. In order to tackle this we implemented Quick sort. But now although the quick sort algorithm was doing better for large datasets, it was very slow for smaller datasets. In order to handle this we implemented a strategy where for small datasets, bubble sort will be used and for larger, quick sort.
-
-In plain words
-> Strategy pattern allows you to switch the algorithm or strategy based upon the situation.
-
-Wikipedia says
-> In computer programming, the strategy pattern (also known as the policy pattern) is a behavioural software design pattern that enables an algorithm's behavior to be selected at runtime.
-
-**Programmatic example**
-
-Translating our example from above. First of all we have our strategy interface and different strategy implementations
-
-```php
-interface SortStrategy
-{
-    public function sort(array $dataset): array;
-}
-
-class BubbleSortStrategy implements SortStrategy
-{
-    public function sort(array $dataset): array
-    {
-        echo "Sorting using bubble sort";
-
-        // Do sorting
-        return $dataset;
-    }
-}
-
-class QuickSortStrategy implements SortStrategy
-{
-    public function sort(array $dataset): array
-    {
-        echo "Sorting using quick sort";
-
-        // Do sorting
-        return $dataset;
-    }
-}
-```
-
-And then we have our client that is going to use any strategy
-```php
-class Sorter
-{
-    protected $sorter;
-
-    public function __construct(SortStrategy $sorter)
-    {
-        $this->sorter = $sorter;
-    }
-
-    public function sort(array $dataset): array
-    {
-        return $this->sorter->sort($dataset);
-    }
-}
-```
-And it can be used as
-```php
-$dataset = [1, 5, 4, 3, 2, 8];
-
-$sorter = new Sorter(new BubbleSortStrategy());
-$sorter->sort($dataset); // Output : Sorting using bubble sort
-
-$sorter = new Sorter(new QuickSortStrategy());
-$sorter->sort($dataset); // Output : Sorting using quick sort
-```
-
-💢 State
------
-Real world example
-> Imagine you are using some drawing application, you choose the paint brush to draw. Now the brush changes its behavior based on the selected color i.e. if you have chosen red color it will draw in red, if blue then it will be in blue etc.  
-
-In plain words
-> It lets you change the behavior of a class when the state changes.
-
-Wikipedia says
-> The state pattern is a behavioral software design pattern that implements a state machine in an object-oriented way. With the state pattern, a state machine is implemented by implementing each individual state as a derived class of the state pattern interface, and implementing state transitions by invoking methods defined by the pattern's superclass.
-> The state pattern can be interpreted as a strategy pattern which is able to switch the current strategy through invocations of methods defined in the pattern's interface.
-
-**Programmatic example**
-
-Let's take an example of text editor, it lets you change the state of text that is typed i.e. if you have selected bold, it starts writing in bold, if italic then in italics etc.
-
-First of all we have our state interface and some state implementations
-
-```php
-interface WritingState
-{
-    public function write(string $words);
-}
-
-class UpperCase implements WritingState
-{
-    public function write(string $words)
-    {
-        echo strtoupper($words);
-    }
-}
-
-class LowerCase implements WritingState
-{
-    public function write(string $words)
-    {
-        echo strtolower($words);
-    }
-}
-
-class DefaultText implements WritingState
-{
-    public function write(string $words)
-    {
-        echo $words;
-    }
-}
-```
-Then we have our editor
-```php
-class TextEditor
-{
-    protected $state;
-
-    public function __construct(WritingState $state)
-    {
-        $this->state = $state;
-    }
-
-    public function setState(WritingState $state)
-    {
-        $this->state = $state;
-    }
-
-    public function type(string $words)
-    {
-        $this->state->write($words);
-    }
-}
-```
-And then it can be used as
-```php
-$editor = new TextEditor(new DefaultText());
-
-$editor->type('First line');
-
-$editor->setState(new UpperCase());
-
-$editor->type('Second line');
-$editor->type('Third line');
-
-$editor->setState(new LowerCase());
-
-$editor->type('Fourth line');
-$editor->type('Fifth line');
-
-// Output:
-// First line
-// SECOND LINE
-// THIRD LINE
-// fourth line
-// fifth line
-```
-
-📒 Template Method
----------------
-
-Real world example
-> Suppose we are getting some house built. The steps for building might look like
-> - Prepare the base of house
-> - Build the walls
-> - Add roof
-> - Add other floors
-
-> The order of these steps could never be changed i.e. you can't build the roof before building the walls etc but each of the steps could be modified for example walls can be made of wood or polyester or stone.
-
-In plain words
-> Template method defines the skeleton of how a certain algorithm could be performed, but defers the implementation of those steps to the children classes.
-
-Wikipedia says
-> In software engineering, the template method pattern is a behavioral design pattern that defines the program skeleton of an algorithm in an operation, deferring some steps to subclasses. It lets one redefine certain steps of an algorithm without changing the algorithm's structure.
-
-**Programmatic Example**
-
-Imagine we have a build tool that helps us test, lint, build, generate build reports (i.e. code coverage reports, linting report etc) and deploy our app on the test server.
-
-First of all we have our base class that specifies the skeleton for the build algorithm
-```php
-abstract class Builder
-{
-
-    // Template method
-    final public function build()
-    {
-        $this->test();
-        $this->lint();
-        $this->assemble();
-        $this->deploy();
-    }
-
-    abstract public function test();
-    abstract public function lint();
-    abstract public function assemble();
-    abstract public function deploy();
-}
-```
-
-Then we can have our implementations
-
-```php
-class AndroidBuilder extends Builder
-{
-    public function test()
-    {
-        echo 'Running android tests';
-    }
-
-    public function lint()
-    {
-        echo 'Linting the android code';
-    }
-
-    public function assemble()
-    {
-        echo 'Assembling the android build';
-    }
-
-    public function deploy()
-    {
-        echo 'Deploying android build to server';
-    }
-}
-
-class IosBuilder extends Builder
-{
-    public function test()
-    {
-        echo 'Running ios tests';
-    }
-
-    public function lint()
-    {
-        echo 'Linting the ios code';
-    }
-
-    public function assemble()
-    {
-        echo 'Assembling the ios build';
-    }
-
-    public function deploy()
-    {
-        echo 'Deploying ios build to server';
-    }
-}
-```
-And then it can be used as
-
-```php
-$androidBuilder = new AndroidBuilder();
-$androidBuilder->build();
-
-// Output:
-// Running android tests
-// Linting the android code
-// Assembling the android build
-// Deploying android build to server
-
-$iosBuilder = new IosBuilder();
-$iosBuilder->build();
-
-// Output:
-// Running ios tests
-// Linting the ios code
-// Assembling the ios build
-// Deploying ios build to server
-```
-
-## 🚦 Wrap Up Folks
-
-And that about wraps it up. I will continue to improve this, so you might want to watch/star this repository to revisit. Also, I have plans on writing the same about the architectural patterns, stay tuned for it.
-
-## 👬 Contribution
-
-- Report issues
-- Open pull request with improvements
-- Spread the word
-- Reach out with any feedback [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/kamranahmedse.svg?style=social&label=Follow%20%40kamranahmedse)](https://twitter.com/kamranahmedse)
-
-## Sponsored By
-
-- [Highig - Think and its done](http://highig.com/)
 
 ## License
 
