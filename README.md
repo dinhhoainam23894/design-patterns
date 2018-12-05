@@ -570,7 +570,7 @@ Structural Design Patterns
 ==========================
 Nói một cách đơn giản
 
-> Structural pattern chủ yếu quan tâm tới các thành phần đối tượng hay nói cách khác là các thực thể có thể tương tác lẫn nhau như thế nào. Hoặc giải thích khác sẽ là, chúnggiúp trả lời "Cách xây dựng thành phần phần mềm?"
+> Structural pattern chủ yếu quan tâm tới các thành phần đối tượng hay nói cách khác là các thực thể có thể tương tác lẫn nhau như thế nào. Hoặc giải thích khác sẽ là, chúng giúp trả lời "Cách xây dựng thành phần phần mềm?"
 
 Wikipedia định nghĩa là
 > Trong lĩnh vực kĩ thuật phần mềm, structural design pattern là các design pattern được thiết kế dễ dàng bằng cách xác định đơn giản các mối quan hệ giữa các thực thể. 
@@ -685,14 +685,14 @@ Ví dụ thực tế
 ![có hoặc không có bridge pattern](https://cloud.githubusercontent.com/assets/11269635/23065293/33b7aea0-f515-11e6-983f-98823c9845ee.png)
 
 Nói một cách đơn giản
-> Bridge pattern là về việc thích thành phần hơn inheritence (kế thừa). Chi tiết việc implement được đẩy từ một hệ thống phân cấp tới các object khác với hệ thống phân cấp riêng biệt.
+> Bridge pattern là về việc ưu tiên thành phần hơn inheritence (kế thừa). Chi tiết việc implement được đẩy từ một hệ thống phân cấp tới các object khác với hệ thống phân cấp riêng biệt.
 
 Wikipedia định nghĩa là
 > Bridge pattern là một design pattern được sử dụng trong kĩ thuật phần mềm mà nó được định nghĩa là "phân tách một trừu tượng từ việc thực hiện của nó để cả hai có thể khác nhau một cách độc lập"
 
 **Ví dụ trong lập trình**
 
-Ví dụ như việc dịch trang web của chúng ta từ trên xuống. Ở đây chúng ta có một hệ thống cấp bậc `WebPage`
+Ví dụ như việc dịch trang web của chúng ta từ trên. Ở đây chúng ta có một hệ thống cấp bậc `WebPage`
 
 ```php
 interface WebPage
@@ -1033,7 +1033,7 @@ echo $someCoffee->getDescription(); // Simple Coffee, milk, whip, vanilla
 ----------------
 
 Ví dụ thực tế
->Làm thế nào để bạn bật máy tính? "Nhấn nút nguồn" bạn sẽ nói! Đó là điều bạn tin bởi vì bạn đang sử dụng một giao diện đơn giản mà máy tính cung cấp ở bên ngoài, bên trong nó phải làm rất nhiều thứ để làm cho nó xảy ra. Giao diện đơn giản này với hệ thống con phức tạp là một facade.
+>Làm thế nào để bạn bật máy tính? bạn sẽ nói "Nhấn nút nguồn" ! Đó là điều bạn tin bởi vì bạn đang sử dụng một giao diện đơn giản mà máy tính cung cấp ở bên ngoài, bên trong nó phải làm rất nhiều thứ để làm cho nó xảy ra. Giao diện đơn giản này với hệ thống con phức tạp là một facade.
 
 Nói một cách đơn giản
 > Facade pattern cung cấp giao diện đơn giản cho một hệ thống con phức tạp.
